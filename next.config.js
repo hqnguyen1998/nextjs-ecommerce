@@ -5,6 +5,6 @@ module.exports = withSass({
   /* config options here */
   cssModules: true,
   env: {
-    API_URL: 'http://localhost:3000',
+    API_URL: 'https://store.1998.dev',
   },
 });
