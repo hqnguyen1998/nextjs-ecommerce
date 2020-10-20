@@ -1,9 +1,13 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 import { TextField } from 'formik-material-ui';
 import { Button } from '@material-ui/core';
+import { loginWithEmailAndPassword } from '../redux/actions/userActions';
 
 const LoginForm = () => {
+  const dispatch = useDispatch();
+
   return (
     <Formik
       initialValues={{
@@ -12,8 +16,9 @@ const LoginForm = () => {
       }}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
+          const { email, password } = values;
           setSubmitting(false);
-          console.log(values);
+          dispatch(loginWithEmailAndPassword(email, password));
         }, 500);
       }}
     >

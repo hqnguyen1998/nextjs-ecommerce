@@ -8,13 +8,16 @@ import {
   Typography,
   Container,
   makeStyles,
+  Avatar,
 } from '@material-ui/core';
 import {
   PersonOutline,
   Brightness4Sharp,
   BrightnessHighSharp,
+  ExitToAppOutlined,
 } from '@material-ui/icons';
 // Redux actions
+import { signOut } from '../redux/actions/userActions';
 import { toggleLayoutTheme } from '../redux/actions/themeActions';
 
 const useStyles = makeStyles(() => ({
@@ -23,12 +26,14 @@ const useStyles = makeStyles(() => ({
   },
   title: {
     textTransform: 'uppercase',
+    fontWeight: 'bold',
     cursor: 'pointer',
   },
 }));
 
 const Navbar = () => {
   const dispatch = useDispatch();
+  const { isAuth, loggedUser } = useSelector((state) => state.user);
   const theme = useSelector((state) => state.theme.lightTheme);
   const classes = useStyles();
 
@@ -39,6 +44,35 @@ const Navbar = () => {
   const handleToggleLayoutTheme = () => {
     dispatch(toggleLayoutTheme());
   };
+
+  const handleSignOut = () => {
+    dispatch(signOut());
+  };
+
+  const AuthLink = () => (
+    <>
+      <IconButton color='inherit'>
+        <Avatar src={loggedUser.avatar} alt='avatar' />
+      </IconButton>
+      <IconButton color='inherit' onClick={handleToggleLayoutTheme}>
+        {theme ? <Brightness4Sharp /> : <BrightnessHighSharp />}
+      </IconButton>
+      <IconButton color='inherit' onClick={handleSignOut}>
+        <ExitToAppOutlined />
+      </IconButton>
+    </>
+  );
+
+  const NonAuthLink = () => (
+    <>
+      <IconButton color='inherit' onClick={() => handleRoute('/login')}>
+        <PersonOutline />
+      </IconButton>
+      <IconButton color='inherit' onClick={handleToggleLayoutTheme}>
+        {theme ? <Brightness4Sharp /> : <BrightnessHighSharp />}
+      </IconButton>
+    </>
+  );
 
   return (
     <AppBar position='static' color='transparent'>
@@ -52,12 +86,7 @@ const Navbar = () => {
             Medium
           </Typography>
           <div className={classes.root} />
-          <IconButton color='inherit' onClick={() => handleRoute('/login')}>
-            <PersonOutline />
-          </IconButton>
-          <IconButton color='inherit' onClick={handleToggleLayoutTheme}>
-            {theme ? <Brightness4Sharp /> : <BrightnessHighSharp />}
-          </IconButton>
+          {isAuth ? <AuthLink /> : <NonAuthLink />}
         </Toolbar>
       </Container>
     </AppBar>

@@ -4,6 +4,7 @@ import { useStore } from '../redux/store';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import ThemeWrapper from '../layouts/themeWrapper';
+import AuthWrapper from '../middleware/auth';
 
 function MyApp({ Component, pageProps }) {
   const store = useStore(pageProps.initialReduxState);
@@ -23,7 +24,9 @@ function MyApp({ Component, pageProps }) {
     <Provider store={store}>
       <PersistGate loading={<div>loading</div>} persistor={persistor}>
         <ThemeWrapper>
-          <Component {...pageProps} />
+          <AuthWrapper>
+            <Component {...pageProps} />
+          </AuthWrapper>
         </ThemeWrapper>
       </PersistGate>
     </Provider>

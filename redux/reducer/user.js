@@ -12,6 +12,7 @@ const reducer = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
     case t.LOGIN_USER_SUCCESS:
+    case t.LOADED_USER_SUCCESS:
       return {
         ...state,
         token: payload.token,
@@ -21,13 +22,23 @@ const reducer = (state = initialState, action) => {
         error: null,
       };
     case t.LOGIN_USER_FAILED:
+    case t.LOADED_USER_FAILED:
       return {
         ...state,
         token: '',
         isLoading: false,
         isAuth: false,
         loggedUser: {},
-        error: true,
+        error: payload,
+      };
+    case t.SIGN_OUT:
+      return {
+        ...state,
+        token: '',
+        isLoading: false,
+        isAuth: false,
+        loggedUser: {},
+        error: null,
       };
     default:
       return state;

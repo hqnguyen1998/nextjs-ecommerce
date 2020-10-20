@@ -5,8 +5,8 @@ module.exports = withSass({
   /* config options here */
   cssModules: true,
   env: {
-    API_URL: 'https://store.1998.dev',
-    JWT_SECRET: 'Huychi2511',
-    MONGO_URI: '',
+    API_URL: process.env.API_URL,
+    JWT_SECRET: process.env.JWT_SECRET,
+    MONGO_URI: process.env.MONGO_URI,
   },
 });
