@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import { Container } from '@material-ui/core';
 import Navbar from '../components/navbar';
 
 const MainLayout = ({ title, children }) => {
@@ -16,7 +17,7 @@ const MainLayout = ({ title, children }) => {
         />
       </Head>
       <Navbar />
-      <div>{children}</div>
+      <Container maxWidth='md'>{children}</Container>
     </div>
   );
 };

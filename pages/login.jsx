@@ -1,10 +1,11 @@
-const { default: MainLayout } = require('../layouts/mainLayout');
+import LoginForm from '../components/loginForm';
+import MainLayout from '../layouts/mainLayout';
 
 const LoginPage = () => {
   return (
     <div>
       <MainLayout title='Login User'>
-        <h1>Login Page</h1>
+        <LoginForm />
       </MainLayout>
     </div>
   );
