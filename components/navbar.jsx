@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Router from 'next/router';
 import {
   AppBar,
@@ -8,7 +9,13 @@ import {
   Container,
   makeStyles,
 } from '@material-ui/core';
-import { PersonOutline } from '@material-ui/icons';
+import {
+  PersonOutline,
+  Brightness4Sharp,
+  BrightnessHighSharp,
+} from '@material-ui/icons';
+// Redux actions
+import { toggleLayoutTheme } from '../redux/actions/themeActions';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -21,10 +28,16 @@ const useStyles = makeStyles(() => ({
 }));
 
 const Navbar = () => {
+  const dispatch = useDispatch();
+  const theme = useSelector((state) => state.theme.lightTheme);
   const classes = useStyles();
 
   const handleRoute = (route) => {
     Router.push(route);
+  };
+
+  const handleToggleLayoutTheme = () => {
+    dispatch(toggleLayoutTheme());
   };
 
   return (
@@ -41,6 +54,9 @@ const Navbar = () => {
           <div className={classes.root} />
           <IconButton color='inherit' onClick={() => handleRoute('/login')}>
             <PersonOutline />
+          </IconButton>
+          <IconButton color='inherit' onClick={handleToggleLayoutTheme}>
+            {theme ? <Brightness4Sharp /> : <BrightnessHighSharp />}
           </IconButton>
         </Toolbar>
       </Container>

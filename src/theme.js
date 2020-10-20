@@ -1,6 +1,16 @@
 import { createMuiTheme, responsiveFontSizes } from '@material-ui/core';
 
-const theme = createMuiTheme({
+const lightTheme = createMuiTheme({
+  palette: {
+    type: 'light',
+  },
+  typography: {
+    fontSize: 12,
+    fontFamily: 'Roboto Condensed, sans-serif',
+  },
+});
+
+const darkTheme = createMuiTheme({
   palette: {
     type: 'dark',
   },
@@ -10,6 +20,5 @@ const theme = createMuiTheme({
   },
 });
 
-const responsiveTheme = responsiveFontSizes(theme);
-
-export default responsiveTheme;
+export const responsiveLightTheme = responsiveFontSizes(lightTheme);
+export const responsiveDarkTheme = responsiveFontSizes(darkTheme);

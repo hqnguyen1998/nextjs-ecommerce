@@ -3,12 +3,23 @@ import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunkMiddleware from 'redux-thunk';
 import reducers from './reducer';
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import rootReducer from './reducer';
 
 let store;
 
+const persistConfig = {
+  key: 'primary',
+  storage,
+  whitelist: ['theme'], // place to select which state you want to persist
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
 function initStore(initialState) {
   return createStore(
-    reducers,
+    persistedReducer,
     initialState,
     composeWithDevTools(applyMiddleware(thunkMiddleware))
   );

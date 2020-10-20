@@ -1,11 +1,15 @@
 import { useEffect } from 'react';
 import { Provider } from 'react-redux';
-import { CssBaseline, ThemeProvider } from '@material-ui/core';
-import theme from '../src/theme';
 import { useStore } from '../redux/store';
+import { persistStore } from 'redux-persist';
+import { PersistGate } from 'redux-persist/integration/react';
+import ThemeWrapper from '../layouts/themeWrapper';
 
 function MyApp({ Component, pageProps }) {
   const store = useStore(pageProps.initialReduxState);
+  const persistor = persistStore(store, {}, function () {
+    persistor.persist();
+  });
 
   useEffect(() => {
     // Remove the server-side injected CSS.
@@ -17,11 +21,11 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-
-        <Component {...pageProps} />
-      </ThemeProvider>
+      <PersistGate loading={<div>loading</div>} persistor={persistor}>
+        <ThemeWrapper>
+          <Component {...pageProps} />
+        </ThemeWrapper>
+      </PersistGate>
     </Provider>
   );
 }
