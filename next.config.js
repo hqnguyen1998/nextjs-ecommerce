@@ -6,5 +6,7 @@ module.exports = withSass({
   cssModules: true,
   env: {
     API_URL: 'https://store.1998.dev',
+    JWT_SECRET: 'Huychi2511',
+    MONGO_URI: '',
   },
 });
