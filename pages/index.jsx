@@ -14,12 +14,14 @@ function Home({ posts }) {
   );
 }
 
-Home.getInitialProps = async (ctx) => {
+export const getStaticProps = async (ctx) => {
   const response = await fetch(`${process.env.API_URL}/api/post`);
   const { data } = await response.json();
 
   return {
-    posts: data,
+    props: {
+      posts: data,
+    },
   };
 };
 
