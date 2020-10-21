@@ -16,7 +16,7 @@ const AuthWrapper = ({ children }) => {
       delete axios.defaults.headers.common['Authorization'];
     }
 
-    dispatch(onAuthStateChanged(token));
+    dispatch(onAuthStateChanged());
   }, []);
 
   return <div>{children}</div>;

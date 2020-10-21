@@ -10,14 +10,13 @@ export const signOut = () => (dispatch) => {
   });
 };
 
-export const onAuthStateChanged = (token) => async (dispatch) => {
+export const onAuthStateChanged = () => async (dispatch) => {
   try {
     const res = await axios({
       url: `${process.env.API_URL}/api/auth`,
       method: 'GET',
       headers: {
         'Content-type': 'application/json',
-        authorization: token,
       },
     });
 
@@ -26,7 +25,6 @@ export const onAuthStateChanged = (token) => async (dispatch) => {
       payload: res.data,
     });
   } catch (error) {
-    Cookies.remove('token');
     dispatch({
       type: t.LOADED_USER_FAILED,
       payload: error.response.data,

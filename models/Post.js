@@ -16,7 +16,7 @@ const PostSchema = new Schema({
     minlength: 1,
     trim: true,
   },
-  slug: { type: String, slug: 'title' },
+  slug: { type: String, slug: 'title', unique: true },
   image: {
     type: String,
     minlength: 1,
