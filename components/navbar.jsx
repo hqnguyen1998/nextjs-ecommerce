@@ -9,12 +9,14 @@ import {
   Container,
   makeStyles,
   Avatar,
+  Button,
 } from '@material-ui/core';
 import {
   PersonOutline,
   Brightness4Sharp,
   BrightnessHighSharp,
   ExitToAppOutlined,
+  PostAddOutlined,
 } from '@material-ui/icons';
 // Redux actions
 import { signOut } from '../redux/actions/userActions';
@@ -54,6 +56,14 @@ const Navbar = () => {
       <IconButton color='inherit'>
         <Avatar src={loggedUser.avatar} alt='avatar' />
       </IconButton>
+      <Button
+        variant='contained'
+        color='primary'
+        startIcon={<PostAddOutlined />}
+        onClick={() => handleRoute('/create')}
+      >
+        Write a post
+      </Button>
       <IconButton color='inherit' onClick={handleToggleLayoutTheme}>
         {theme ? <Brightness4Sharp /> : <BrightnessHighSharp />}
       </IconButton>

@@ -12,7 +12,10 @@ export default async (req, res) => {
     //   Get All Posts
     case 'GET':
       try {
-        const posts = await Post.find({});
+        const posts = await Post.find({})
+          .skip(0)
+          .limit(10)
+          .sort({ created_date: 'desc' });
 
         res.status(200).json({
           success: true,
