@@ -8,28 +8,29 @@ function Home({ posts }) {
   return (
     <div>
       <MainLayout title='Home Page'>
-        {posts.map((post) => (
+        {/* {posts.map((post) => (
           <PostListItems key={post._id} post={post} />
-        ))}
+        ))} */}
+        <h1>Posts</h1>
       </MainLayout>
     </div>
   );
 }
 
-export const getStaticProps = async () => {
-  const { data } = await axios({
-    url: `${process.env.API_URL}/api/post`,
-    method: 'GET',
-    headers: {
-      'Content-type': 'application/json',
-    },
-  });
+// export const getStaticProps = async () => {
+//   const { data } = await axios({
+//     url: `${process.env.API_URL}/api/post`,
+//     method: 'GET',
+//     headers: {
+//       'Content-type': 'application/json',
+//     },
+//   });
 
-  return {
-    props: {
-      posts: data.data,
-    },
-  };
-};
+//   return {
+//     props: {
+//       posts: data.data,
+//     },
+//   };
+// };
 
 export default Home;
