@@ -17,6 +17,7 @@ const MainLayout = ({ title, children }) => {
         />
       </Head>
       <Navbar />
+      <br />
       <Container maxWidth='md'>{children}</Container>
     </div>
   );
