@@ -14,7 +14,7 @@ function Home({ posts }) {
   );
 }
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
   const response = await fetch(`${process.env.API_URL}/api/post`);
   const { data } = await response.json();
 
