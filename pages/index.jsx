@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import axios from 'axios';
+import fetch from 'isomorphic-unfetch';
 import { List, ListItem, Divider, Grid } from '@material-ui/core';
 import MainLayout from '../layouts/mainLayout';
 import PostListItems from '../components/postListItems';
@@ -16,12 +16,13 @@ function Home({ posts }) {
   );
 }
 
-export const getStaticProps = async () => {
-  const { data } = await axios.get(`${process.env.API_URL}/api/post`);
+export const getServerSideProps = async () => {
+  const response = await fetch(`${process.env.API_URL}/api/post`);
+  const { data } = await response.json();
 
   return {
     props: {
-      posts: data.data,
+      posts: data,
     },
   };
 };
