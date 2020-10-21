@@ -3,7 +3,7 @@ import MainLayout from '../../layouts/mainLayout';
 
 const Post = ({ post }) => {
   return (
-    <MainLayout title='post'>
+    <MainLayout title={post.title}>
       <h1>{post.title}</h1>
     </MainLayout>
   );
