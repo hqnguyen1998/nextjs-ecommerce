@@ -1,19 +1,23 @@
-import axios from 'axios';
+import fetch from 'isomorphic-unfetch';
 import MainLayout from '../../layouts/mainLayout';
 
 const Post = ({ post }) => {
   return (
     <MainLayout title='post'>
-      <h1>Post</h1>
+      <h1>{post.title}</h1>
     </MainLayout>
   );
 };
 
 export const getStaticPaths = async () => {
-  const { data } = await axios.get(`${process.env.API_URL}/api/post`);
+  const response = await fetch(`${process.env.API_URL}/api/post`);
 
-  const paths = data.data.map((post) => ({
-    params: { slug: [post.author, post.slug] },
+  const { data } = await response.json();
+
+  const paths = data.map((post) => ({
+    params: {
+      slug: [post.author, post.slug],
+    },
   }));
 
   return {
@@ -23,13 +27,14 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params }) => {
-  const { data } = await axios.get(
+  const response = await fetch(
     `${process.env.API_URL}/api/post/${params.slug[1]}`
   );
+  const { data } = await response.json();
 
   return {
     props: {
-      post: data.data,
+      post: data,
     },
   };
 };
