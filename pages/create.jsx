@@ -18,6 +18,7 @@ const useStyles = makeStyles(() => ({
   },
   inputContent: {
     fontSize: 30,
+    lineHeight: '2rem',
     paddingTop: 10,
   },
 }));
@@ -27,8 +28,6 @@ const CreatePost = () => {
   const [files, setFiles] = React.useState(null);
 
   const handleSubmitPost = (values, { setSubmitting }) => {
-    e.preventDefault();
-
     setTimeout(async () => {
       setSubmitting(false);
 
@@ -41,8 +40,31 @@ const CreatePost = () => {
         data: files,
       });
 
-      console.log(data.data.link);
+      const imageUrl = data.data.link;
+
+      const tags = values.tags.split(',');
+
+      const newData = {
+        image: imageUrl,
+        tags: tags,
+        ...values,
+      };
+
+      const uploadData = await axios({
+        url: `${process.env.API_URL}/api/post`,
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        data: newData,
+      });
+
+      console.log(uploadData);
     }, 500);
+  };
+
+  const handleSetFiles = (value) => {
+    setFiles(value);
   };
 
   return (
@@ -54,20 +76,11 @@ const CreatePost = () => {
             tags: '',
             body: '',
           }}
-          validate={(values) => {
-            const errors = {};
-
-            if (!values.title) {
-              errors.title = 'Required';
-            }
-
-            return errors;
-          }}
           onSubmit={handleSubmitPost}
         >
           {({ submitForm, isSubmitting }) => (
             <Form>
-              <FilesForm files={files} setFiles={setFiles} />
+              <FilesForm files={files} setFiles={handleSetFiles} />
               <Field
                 component={InputBase}
                 type='text'
@@ -101,7 +114,13 @@ const CreatePost = () => {
                 multiline
                 fullWidth
               />
-              <Button type='submit' variant='contained' color='primary'>
+              <Button
+                onClick={submitForm}
+                type='submit'
+                variant='contained'
+                color='primary'
+                disabled={isSubmitting}
+              >
                 Post
               </Button>
             </Form>

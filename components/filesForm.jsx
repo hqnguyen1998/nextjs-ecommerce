@@ -24,13 +24,21 @@ const FilesForm = ({ files, setFiles }) => {
     <div>
       {!url ? (
         <div>
-          <Button variant='outlined' color='primary' onClick={handleOpen}>
+          <Button variant='outlined' color='inherit' onClick={handleOpen}>
             Add a cover image
           </Button>
         </div>
       ) : (
         <div>
-          <img src={url} style={{ width: 250, display: 'block' }} />
+          <img
+            src={url}
+            style={{
+              width: '100%',
+              height: '300px',
+              objectFit: 'contain',
+              display: 'block',
+            }}
+          />
           <br />
           <Button variant='outlined' color='primary' onClick={handleOpen}>
             Change
@@ -43,6 +51,8 @@ const FilesForm = ({ files, setFiles }) => {
 
       <InputBase
         type='file'
+        name='file'
+        accept='image/*'
         inputRef={inputRef}
         onChange={handleOnChangeInputFile}
         style={{ display: 'none' }}

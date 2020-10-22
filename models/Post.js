@@ -22,6 +22,11 @@ const PostSchema = new Schema({
     minlength: 1,
     trim: true,
   },
+  tags: [
+    {
+      type: String,
+    },
+  ],
   body: {
     type: String,
   },
