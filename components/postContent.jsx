@@ -1,5 +1,4 @@
 import React from 'react';
-import fetch from 'isomorphic-unfetch';
 import { Paper, Box, Typography, Avatar, makeStyles } from '@material-ui/core';
 import Moment from 'react-moment';
 import ReactMarkDown from 'react-markdown';
@@ -17,8 +16,9 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
   },
   postTitle: {
-    fontWeight: 'bold',
-    fontSize: 70,
+    fontWeight: 400,
+    fontSize: 48,
+    lineHeight: '60px',
   },
   userInfo: {
     display: 'flex',
@@ -42,23 +42,8 @@ const useStyles = makeStyles((theme) => ({
 
 const PostContent = ({ post }) => {
   const classes = useStyles();
-  const [author, setAuthor] = React.useState({});
 
-  React.useEffect(() => {
-    const fetchAuthor = async () => {
-      const res = await fetch(
-        `${process.env.API_URL}/api/user?id=${post.author}`
-      );
-
-      const { data } = await res.json();
-
-      return setAuthor(data);
-    };
-
-    fetchAuthor();
-  }, []);
-
-  const { avatar, email, first_name, last_name } = author;
+  const { email, avatar, first_name, last_name } = post.author;
 
   return (
     <React.Fragment>
@@ -71,7 +56,7 @@ const PostContent = ({ post }) => {
           <Typography
             variant='h3'
             gutterBottom
-            align='justify'
+            align='left'
             className={classes.postTitle}
           >
             {post.title}

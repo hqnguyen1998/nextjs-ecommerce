@@ -22,7 +22,7 @@ const PostListItems = ({ post }) => {
     <Card className={classes.card}>
       <CardContent>
         <Typography gutterBottom variant='h5' component='h2'>
-          <Link href='/post/[user]/[slug]' as={`/post/${author}/${slug}`}>
+          <Link href='/post/[user]/[slug]' as={`/post/${author._id}/${slug}`}>
             <a>{title}</a>
           </Link>
         </Typography>

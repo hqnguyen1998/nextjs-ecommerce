@@ -31,6 +31,7 @@ const CreatePost = () => {
 
   const handleSubmitPost = (values, { setSubmitting }) => {
     setTimeout(async () => {
+      setSubmitting(false);
       const { data } = await axios({
         url: 'https://api.imgur.com/3/image',
         method: 'POST',
@@ -56,7 +57,7 @@ const CreatePost = () => {
         data: newData,
       });
 
-      setSubmitting(false);
+      setSubmitting(true);
     }, 500);
   };
 

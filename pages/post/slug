@@ -22,7 +22,7 @@ export const getServerSideProps = async (ctx) => {
   const { data } = await response.json();
 
   const filterData = data.filter(
-    (post) => post.author === slug[0] && post.slug === slug[1]
+    (post) => post.author._id === slug[0] && post.slug === slug[1]
   );
 
   if (filterData.length > 0) {

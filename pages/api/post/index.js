@@ -13,6 +13,12 @@ export default async (req, res) => {
     case 'GET':
       try {
         const posts = await Post.find({})
+          .populate('author', {
+            email: 1,
+            first_name: 1,
+            last_name: 1,
+            avatar: 1,
+          })
           .skip(0)
           .limit(10)
           .sort({ created_date: 'desc' });
