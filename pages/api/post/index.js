@@ -62,10 +62,13 @@ export default async (req, res) => {
         // User Id
         const { id } = verified;
 
+        const tagsArray = body.tags.split(',');
+
         // Create New post
         const post = await Post.create({
-          author: id,
           ...body,
+          author: id,
+          tags: tagsArray,
         });
 
         // Add Post to user

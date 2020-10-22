@@ -1,6 +1,6 @@
 import MainLayout from '../layouts/mainLayout';
 import { Formik, Form, Field } from 'formik';
-import { InputBase } from 'formik-material-ui';
+import { TextField, SimpleFileUpload } from 'formik-material-ui';
 import axios from 'axios';
 
 import { Box, Paper, makeStyles, Button } from '@material-ui/core';
@@ -17,9 +17,11 @@ const useStyles = makeStyles(() => ({
     fontSize: 20,
   },
   inputContent: {
-    fontSize: 30,
+    fontSize: '25px',
     lineHeight: '2rem',
+    fontWeight: '400',
     paddingTop: 10,
+    color: '#08090a',
   },
 }));
 
@@ -29,8 +31,6 @@ const CreatePost = () => {
 
   const handleSubmitPost = (values, { setSubmitting }) => {
     setTimeout(async () => {
-      setSubmitting(false);
-
       const { data } = await axios({
         url: 'https://api.imgur.com/3/image',
         method: 'POST',
@@ -42,15 +42,12 @@ const CreatePost = () => {
 
       const imageUrl = data.data.link;
 
-      const tags = values.tags.split(',');
-
       const newData = {
         image: imageUrl,
-        tags: tags,
         ...values,
       };
 
-      const uploadData = await axios({
+      await axios({
         url: `${process.env.API_URL}/api/post`,
         method: 'POST',
         headers: {
@@ -59,7 +56,7 @@ const CreatePost = () => {
         data: newData,
       });
 
-      console.log(uploadData);
+      setSubmitting(false);
     }, 500);
   };
 
@@ -76,44 +73,68 @@ const CreatePost = () => {
             tags: '',
             body: '',
           }}
+          validate={(values) => {
+            const errors = {};
+            if (!values.title) {
+              errors.title = 'Required';
+            }
+
+            if (!values.body) {
+              errors.body = 'Required';
+            }
+
+            return errors;
+          }}
           onSubmit={handleSubmitPost}
         >
           {({ submitForm, isSubmitting }) => (
             <Form>
               <FilesForm files={files} setFiles={handleSetFiles} />
               <Field
-                component={InputBase}
+                component={TextField}
                 type='text'
                 name='title'
                 placeholder='New post title here...'
-                classes={{
-                  input: classes.inputTitle,
-                }}
                 margin='dense'
+                InputProps={{
+                  disableUnderline: true,
+                  classes: {
+                    input: classes.inputTitle,
+                  },
+                }}
+                autoFocus
                 fullWidth
               />
               <Field
-                component={InputBase}
+                component={TextField}
                 name='tags'
                 placeholder='Add up to 4 tags'
-                classes={{
-                  input: classes.inputTags,
+                InputProps={{
+                  disableUnderline: true,
+                  classes: {
+                    input: classes.inputTags,
+                  },
                 }}
                 margin='dense'
                 fullWidth
               />
               <Field
-                component={InputBase}
+                component={TextField}
                 name='body'
                 placeholder='Write your post content here...'
-                classes={{
-                  input: classes.inputContent,
-                }}
                 margin='dense'
                 rows={20}
+                variant='standard'
+                InputProps={{
+                  disableUnderline: true,
+                  classes: {
+                    input: classes.inputContent,
+                  },
+                }}
                 multiline
                 fullWidth
               />
+
               <Button
                 onClick={submitForm}
                 type='submit'

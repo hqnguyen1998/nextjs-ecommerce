@@ -60,7 +60,7 @@ const Navbar = () => {
         variant='contained'
         color='primary'
         startIcon={<PostAddOutlined />}
-        onClick={() => handleRoute('/create')}
+        onClick={() => handleRoute('/new')}
       >
         Write a post
       </Button>
