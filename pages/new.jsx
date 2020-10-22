@@ -1,6 +1,6 @@
 import MainLayout from '../layouts/mainLayout';
 import { Formik, Form, Field } from 'formik';
-import { TextField, SimpleFileUpload } from 'formik-material-ui';
+import { TextField } from 'formik-material-ui';
 import axios from 'axios';
 
 import { Box, Paper, makeStyles, Button } from '@material-ui/core';
@@ -77,11 +77,17 @@ const CreatePost = () => {
           validate={(values) => {
             const errors = {};
             if (!values.title) {
-              errors.title = 'Required';
+              errors.title = 'Required.';
+            }
+
+            if (!values.tags) {
+              errors.tags = 'Required at least 1 tag or more.';
             }
 
             if (!values.body) {
               errors.body = 'Required';
+            } else if (values.body.length <= 80) {
+              errors.body = 'Content required at least 80 or more characters.';
             }
 
             return errors;
@@ -109,7 +115,7 @@ const CreatePost = () => {
               <Field
                 component={TextField}
                 name='tags'
-                placeholder='Add up to 4 tags'
+                placeholder='Add up to 4 tags ("Reactjs, Javascript, HTML")'
                 InputProps={{
                   disableUnderline: true,
                   classes: {
