@@ -7,9 +7,23 @@ import gravatar from 'gravatar';
 dbConnect();
 
 export default async (req, res) => {
-  const { method, body } = req;
+  const { method, body, query } = req;
 
   switch (method) {
+    case 'GET':
+      try {
+        const user = await User.findById(query.id).select('-password');
+
+        res.status(200).json({
+          success: true,
+          data: user,
+        });
+      } catch (error) {
+        res.status(400).json({
+          success: false,
+        });
+      }
+      break;
     case 'POST':
       const { email, password, first_name, last_name } = body;
       try {
