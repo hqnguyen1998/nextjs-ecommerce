@@ -12,11 +12,10 @@ const AuthWrapper = ({ children }) => {
 
     if (token) {
       axios.defaults.headers.common['Authorization'] = token;
+      dispatch(onAuthStateChanged());
     } else {
       delete axios.defaults.headers.common['Authorization'];
     }
-
-    dispatch(onAuthStateChanged());
   }, []);
 
   return <div>{children}</div>;

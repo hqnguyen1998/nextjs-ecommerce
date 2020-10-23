@@ -32,6 +32,37 @@ export const onAuthStateChanged = () => async (dispatch) => {
   }
 };
 
+export const registerUser = (userData) => async (dispatch) => {
+  try {
+    const res = await axios({
+      url: `${process.env.API_URL}/api/user`,
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      data: userData,
+    });
+
+    Cookies.set('token', res.data.token);
+
+    return dispatch({
+      type: t.REGISTER_USER_SUCCESS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: t.REGISTER_USER_FAILED,
+      payload: error.response.data,
+    });
+
+    setTimeout(() => {
+      dispatch({
+        type: t.REMOVE_ALERT,
+      });
+    }, 3000);
+  }
+};
+
 export const loginWithEmailAndPassword = (email, password) => async (
   dispatch
 ) => {
@@ -63,5 +94,11 @@ export const loginWithEmailAndPassword = (email, password) => async (
       type: t.LOGIN_USER_FAILED,
       payload: error.response.data,
     });
+
+    setTimeout(() => {
+      dispatch({
+        type: t.REMOVE_ALERT,
+      });
+    }, 3000);
   }
 };

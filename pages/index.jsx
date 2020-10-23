@@ -5,7 +5,7 @@ import PostListItems from '../components/postListItems';
 function Home({ posts }) {
   return (
     <div>
-      <MainLayout title='Home Page'>
+      <MainLayout title='<Dev /> Community'>
         {posts.map((post) => (
           <PostListItems key={post._id} post={post} />
         ))}

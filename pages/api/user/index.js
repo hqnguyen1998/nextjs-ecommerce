@@ -61,7 +61,7 @@ export default async (req, res) => {
         res.status(200).json({
           success: true,
           data: user,
-          token,
+          token: `Bearer ${token}`,
         });
       } catch (error) {
         res.status(400).json({

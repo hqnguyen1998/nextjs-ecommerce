@@ -33,7 +33,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Navbar = () => {
+const Navbar = ({ navbarTitle = `<dev /> Community` }) => {
   const dispatch = useDispatch();
   const { isAuth, loggedUser } = useSelector((state) => state.user);
   const theme = useSelector((state) => state.theme.lightTheme);
@@ -93,7 +93,7 @@ const Navbar = () => {
             className={classes.title}
             onClick={() => handleRoute('/')}
           >
-            Medium
+            {navbarTitle}
           </Typography>
           <div className={classes.root} />
           {isAuth ? <AuthLink /> : <NonAuthLink />}

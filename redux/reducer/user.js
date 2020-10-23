@@ -5,7 +5,7 @@ const initialState = {
   isLoading: true,
   isAuth: false,
   loggedUser: {},
-  error: null,
+  error: {},
 };
 
 const reducer = (state = initialState, action) => {
@@ -13,16 +13,17 @@ const reducer = (state = initialState, action) => {
   switch (type) {
     case t.LOGIN_USER_SUCCESS:
     case t.LOADED_USER_SUCCESS:
+    case t.REGISTER_USER_SUCCESS:
       return {
         ...state,
         token: payload.token,
         isLoading: false,
         isAuth: true,
         loggedUser: payload.data,
-        error: null,
+        error: {},
       };
     case t.LOGIN_USER_FAILED:
-    case t.LOADED_USER_FAILED:
+    case t.REGISTER_USER_FAILED:
       return {
         ...state,
         token: '',
@@ -31,6 +32,14 @@ const reducer = (state = initialState, action) => {
         loggedUser: {},
         error: payload,
       };
+    case t.LOADED_USER_FAILED:
+      return {
+        ...state,
+        token: '',
+        isLoading: false,
+        isAuth: false,
+        loggedUser: {},
+      };
     case t.SIGN_OUT:
       return {
         ...state,
@@ -38,7 +47,12 @@ const reducer = (state = initialState, action) => {
         isLoading: false,
         isAuth: false,
         loggedUser: {},
-        error: null,
+        error: {},
+      };
+    case t.REMOVE_ALERT:
+      return {
+        ...state,
+        error: {},
       };
     default:
       return state;

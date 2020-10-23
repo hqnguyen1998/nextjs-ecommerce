@@ -4,7 +4,10 @@ import PostContent from '../../../components/postContent';
 
 const Post = ({ post }) => {
   return Object.keys(post).length > 0 ? (
-    <MainLayout title={post.title}>
+    <MainLayout
+      navbarTitle={`${post.author.first_name} ${post.author.last_name} `}
+      title={post.title}
+    >
       <PostContent post={post} />
     </MainLayout>
   ) : (

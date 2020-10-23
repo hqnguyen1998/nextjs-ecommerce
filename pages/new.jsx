@@ -1,3 +1,6 @@
+import { useEffect } from 'react';
+import Router from 'next/router';
+import { useSelector } from 'react-redux';
 import MainLayout from '../layouts/mainLayout';
 import { Formik, Form, Field } from 'formik';
 import { TextField } from 'formik-material-ui';
@@ -27,9 +30,14 @@ const useStyles = makeStyles(() => ({
 
 const CreatePost = () => {
   const classes = useStyles();
+  const isAuth = useSelector((state) => state.user.isAuth);
   const [files, setFiles] = React.useState(null);
 
-  const handleSubmitPost = (values, { setSubmitting }) => {
+  useEffect(() => {
+    !isAuth && Router.push('/login');
+  }, [isAuth]);
+
+  const handleSubmitPost = (values, { setSubmitting, resetForm }) => {
     setTimeout(async () => {
       setSubmitting(false);
       const { data } = await axios({
@@ -57,7 +65,8 @@ const CreatePost = () => {
         data: newData,
       });
 
-      setSubmitting(true);
+      resetForm({ values: '' });
+      setFiles(null);
     }, 500);
   };
 

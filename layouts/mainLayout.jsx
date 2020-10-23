@@ -2,7 +2,7 @@ import Head from 'next/head';
 import { Container } from '@material-ui/core';
 import Navbar from '../components/navbar';
 
-const MainLayout = ({ title, children }) => {
+const MainLayout = ({ title, navbarTitle, children }) => {
   return (
     <div>
       <Head>
@@ -16,7 +16,7 @@ const MainLayout = ({ title, children }) => {
           rel='stylesheet'
         />
       </Head>
-      <Navbar />
+      <Navbar navbarTitle={navbarTitle} />
       <br />
       <Container maxWidth='md'>{children}</Container>
     </div>
