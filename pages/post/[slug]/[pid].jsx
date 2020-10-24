@@ -3,7 +3,7 @@ import Router from 'next/router';
 import fetch from 'isomorphic-unfetch';
 import MainLayout from '../../../layouts/mainLayout';
 import PostContent from '../../../components/postContent';
-import ListComment from '../../../components/ListComments';
+import ListComment from '../../../components/listComments';
 
 const Post = ({ post, status }) => {
   useEffect(() => {

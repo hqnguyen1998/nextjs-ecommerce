@@ -79,6 +79,47 @@ export default async (req, res) => {
         });
       }
       break;
+    case 'DELETE':
+      try {
+        const { authorization } = headers;
+        const { pid } = query;
+
+        if (!authorization) {
+          return res.status(404).json({
+            success: false,
+            msg: 'Un-Authorization',
+          });
+        }
+
+        const splitToken = authorization.split(' ');
+
+        if (splitToken[0] !== 'Bearer') {
+          return {
+            success: false,
+            msg: 'Invalid Token',
+          };
+        }
+
+        jwt.verify(splitToken[1], process.env.JWT_SECRET);
+
+        const removeComment = await Comment.findByIdAndRemove(pid);
+
+        await Post.findByIdAndUpdate(body.postId, {
+          $pull: {
+            comments: pid,
+          },
+        });
+
+        res.status(200).json({
+          success: true,
+          msg: `Deleted comment id ${removeComment._id}`,
+        });
+      } catch (error) {
+        res.status(400).json({
+          success: false,
+        });
+      }
+      break;
     default:
       res.status(400).json({
         success: false,

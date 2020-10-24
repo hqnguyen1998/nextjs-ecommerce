@@ -9,3 +9,4 @@ export const REMOVE_ALERT = 'REMOVE_ALERT';
 
 // Theme
 export const TOGGLE_LAYOUT_THEME = 'TOGGLE_LAYOUT_THEME';
+export const CHANGE_NAVBAR_TITLE = 'CHANGE_NAVBAR_TITLE';
