@@ -1,8 +1,14 @@
 import Head from 'next/head';
-import { Container } from '@material-ui/core';
+import { Container, Grid } from '@material-ui/core';
 import Navbar from '../components/navbar';
 
-const MainLayout = ({ title, navbarTitle, children }) => {
+const MainLayout = ({
+  title,
+  navbarTitle,
+  children,
+  LeftSideNav,
+  RightSideNav,
+}) => {
   return (
     <div>
       <Head>
@@ -18,7 +24,19 @@ const MainLayout = ({ title, navbarTitle, children }) => {
       </Head>
       <Navbar navbarTitle={navbarTitle} />
       <br />
-      <Container maxWidth='md'>{children}</Container>
+      <Container maxWidth='md'>
+        <Grid container spacing={2}>
+          <Grid item md={2}>
+            {LeftSideNav}
+          </Grid>
+          <Grid item md={8}>
+            {children}
+          </Grid>
+          <Grid item md={2}>
+            {RightSideNav}
+          </Grid>
+        </Grid>
+      </Container>
     </div>
   );
 };

@@ -77,7 +77,7 @@ const UserMenuPopup = ({ user }) => {
         </MenuItem>
         <Divider />
         <MenuItem onClick={() => handleRoute('/new')}>Write a Post</MenuItem>
-        <MenuItem>Settings</MenuItem>
+        <MenuItem onClick={() => handleRoute('/settings')}>Settings</MenuItem>
         <Divider />
         <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
       </Menu>

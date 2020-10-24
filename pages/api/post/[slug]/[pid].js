@@ -1,8 +1,9 @@
 import dbConnect from '../../../../src/database';
 import Post from '../../../../models/Post';
 
+dbConnect();
+
 export default async (req, res) => {
-  await dbConnect();
   const { method, query } = req;
 
   switch (method) {
