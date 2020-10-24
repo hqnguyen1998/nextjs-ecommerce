@@ -13,7 +13,7 @@ const Post = ({ post, status }) => {
   }, [status]);
 
   return (
-    status === 200 && (
+    Object.keys(post).length > 0 && (
       <MainLayout
         navbarTitle={`${post.author.first_name} ${post.author.last_name} `}
         title={post.title}

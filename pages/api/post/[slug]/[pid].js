@@ -11,19 +11,10 @@ export default async (req, res) => {
         // post slug id
         const { slug, pid } = query;
 
-        const post = await Post.findOne({ _id: pid, slug: slug })
-          .populate({
-            path: 'author',
-            select: '-password -posts',
-          })
-          .populate({
-            path: 'comments',
-            options: {
-              sort: {
-                created_date: -1,
-              },
-            },
-          });
+        const post = await Post.findOne({ _id: pid, slug: slug }).populate({
+          path: 'author',
+          select: '-password -posts',
+        });
 
         if (!post) {
           return res.status(404).json({
