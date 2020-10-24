@@ -5,6 +5,7 @@ import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import ThemeWrapper from '../layouts/themeWrapper';
 import AuthWrapper from '../middleware/auth';
+import '../styles/global.scss';
 
 function MyApp({ Component, pageProps }) {
   const store = useStore(pageProps.initialReduxState);

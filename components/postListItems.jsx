@@ -7,6 +7,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import Link from 'next/link';
+import Moment from 'react-moment';
 import React from 'react';
 
 const useStyles = makeStyles((theme) => ({
@@ -25,18 +26,25 @@ const useStyles = makeStyles((theme) => ({
   userNameText: {
     textTransform: 'capitalize',
     fontWeight: 'bold',
-    fontSize: 17,
-    padding: 10,
+    fontSize: 15,
+    marginLeft: theme.spacing(1),
   },
   link: {
     textDecoration: 'none',
   },
   linkText: {
     fontWeight: 'bold',
-    padding: 30,
+    color: '#08090A',
+    marginTop: theme.spacing(2),
+    marginLeft: theme.spacing(3),
+    textAlign: 'justify',
     '&:hover': {
       color: '#3b49df',
     },
+  },
+  avatar: {
+    width: 30,
+    height: 30,
   },
 }));
 
@@ -48,6 +56,7 @@ const PostListItems = ({ post }) => {
     image,
     author: { avatar, first_name, last_name },
     slug,
+    created_date,
   } = post;
 
   return (
@@ -56,20 +65,34 @@ const PostListItems = ({ post }) => {
         <Typography gutterBottom variant='h5' component='h2'>
           <CardMedia image={image} title={title} className={classes.media} />
           <div className={classes.userInfoWrapper}>
-            <Avatar src={avatar} alt={`${first_name} ${last_name}`} />
-            <Typography
-              variant='body1'
-              color='textSecondary'
-              className={classes.userNameText}
-            >
-              {first_name} {last_name}
-            </Typography>
+            <Avatar
+              src={avatar}
+              alt={`${first_name} ${last_name}`}
+              className={classes.avatar}
+            />
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <Typography
+                variant='body1'
+                color='textPrimary'
+                className={classes.userNameText}
+              >
+                {first_name} {last_name}
+              </Typography>
+              <Typography
+                variant='subtitle1'
+                color='textSecondary'
+                style={{ marginLeft: 8 }}
+              >
+                <Moment format='MMM DD'>{created_date}</Moment> (
+                <Moment fromNow>{created_date}</Moment>)
+              </Typography>
+            </div>
           </div>
 
           <Link href='/post/[slug]/[pid]' as={`/post/${slug}/${_id}`}>
             <a className={classes.link}>
               <Typography
-                variant='h3'
+                variant='h4'
                 color='textPrimary'
                 className={classes.linkText}
               >
@@ -77,6 +100,13 @@ const PostListItems = ({ post }) => {
               </Typography>
             </a>
           </Link>
+          {post.tags.map((tag) => (
+            <Link href='/'>
+              <a style={{ color: '#64707D', marginLeft: 5 }}>
+                <Typography variant='caption'>#{tag}</Typography>
+              </a>
+            </Link>
+          ))}
         </Typography>
       </CardContent>
     </Card>
