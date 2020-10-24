@@ -1,23 +1,29 @@
-import dbConnect from '../../../src/database';
-import Post from '../../../models/Post';
-
-dbConnect();
+import dbConnect from '../../../../src/database';
+import Post from '../../../../models/Post';
 
 export default async (req, res) => {
+  await dbConnect();
   const { method, query } = req;
 
   switch (method) {
     case 'GET':
       try {
         // post slug id
-        const { slug } = query;
+        const { slug, pid } = query;
 
-        const post = await Post.findOne({ slug: slug }).populate('author', {
-          email: 1,
-          first_name: 1,
-          last_name: 1,
-          avatar: 1,
-        });
+        const post = await Post.findOne({ _id: pid, slug: slug })
+          .populate({
+            path: 'author',
+            select: '-password -posts',
+          })
+          .populate({
+            path: 'comments',
+            options: {
+              sort: {
+                created_date: -1,
+              },
+            },
+          });
 
         if (!post) {
           return res.status(404).json({

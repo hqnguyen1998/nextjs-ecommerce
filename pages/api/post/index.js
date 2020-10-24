@@ -13,11 +13,9 @@ export default async (req, res) => {
     case 'GET':
       try {
         const posts = await Post.find({})
-          .populate('author', {
-            email: 1,
-            first_name: 1,
-            last_name: 1,
-            avatar: 1,
+          .populate({
+            path: 'author',
+            select: '-password -posts',
           })
           .skip(0)
           .limit(10)

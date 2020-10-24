@@ -43,9 +43,10 @@ const useStyles = makeStyles((theme) => ({
 const PostListItems = ({ post }) => {
   const classes = useStyles();
   const {
+    _id,
     title,
     image,
-    author: { avatar, _id, first_name, last_name },
+    author: { avatar, first_name, last_name },
     slug,
   } = post;
 
@@ -65,7 +66,7 @@ const PostListItems = ({ post }) => {
             </Typography>
           </div>
 
-          <Link href='/post/[user]/[slug]' as={`/post/${_id}/${slug}`}>
+          <Link href='/post/[slug]/[pid]' as={`/post/${slug}/${_id}`}>
             <a className={classes.link}>
               <Typography
                 variant='h3'
