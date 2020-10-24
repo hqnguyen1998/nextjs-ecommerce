@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
-const ListComments = ({ postId }) => {
+const ListCommentItem = ({ postId }) => {
   const classes = useStyles();
   const token = useSelector((state) => state.user.token);
   const currentUser = useSelector((state) => state.user.loggedUser);
@@ -111,4 +111,4 @@ const ListComments = ({ postId }) => {
   );
 };
 
-export default ListComments;
+export default ListCommentItem;

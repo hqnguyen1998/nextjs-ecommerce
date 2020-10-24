@@ -3,7 +3,7 @@ import Router from 'next/router';
 import fetch from 'isomorphic-unfetch';
 import MainLayout from '../../../layouts/mainLayout';
 import PostContent from '../../../components/postContent';
-import ListCommentList from '../../../components/listComments';
+import ListCommentItem from '../../../components/listCommentItem';
 
 const Post = ({ post, status }) => {
   useEffect(() => {
@@ -19,7 +19,7 @@ const Post = ({ post, status }) => {
         title={post.title}
       >
         <PostContent post={post} />
-        <ListCommentList postId={post._id} />
+        <ListCommentItem postId={post._id} />
       </MainLayout>
     )
   );

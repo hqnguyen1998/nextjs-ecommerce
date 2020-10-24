@@ -100,8 +100,8 @@ const PostListItems = ({ post }) => {
               </Typography>
             </a>
           </Link>
-          {post.tags.map((tag) => (
-            <Link href='/'>
+          {post.tags.map((tag, i) => (
+            <Link href='/' key={i}>
               <a style={{ color: '#64707D', marginLeft: 5 }}>
                 <Typography variant='caption'>#{tag}</Typography>
               </a>
