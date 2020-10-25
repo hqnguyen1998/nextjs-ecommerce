@@ -10,6 +10,28 @@ export const signOut = () => (dispatch) => {
   });
 };
 
+export const updateUserProfile = (userId, userData) => async (dispatch) => {
+  try {
+    const { data } = await axios({
+      url: `/api/user?id=${userId}`,
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      data: userData,
+    });
+
+    dispatch({
+      type: t.UPDATE_USER_SUCCESS,
+      payload: data.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: t.UPDATE_USER_FAILED,
+    });
+  }
+};
+
 export const onAuthStateChanged = () => async (dispatch) => {
   try {
     const res = await axios({

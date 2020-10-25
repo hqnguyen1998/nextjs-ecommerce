@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import fetch from 'isomorphic-unfetch';
 import Router from 'next/router';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
@@ -29,6 +30,33 @@ const LoginPage = () => {
       </MainLayout>
     </div>
   );
+};
+
+export const getServerSideProps = async ({ req, res }) => {
+  const token = req.cookies.token;
+
+  if (!token) {
+    return {
+      props: {},
+    };
+  }
+
+  const response = await fetch(`${process.env.API_URL}/api/auth`, {
+    method: 'GET',
+    headers: {
+      authorization: token,
+    },
+  });
+
+  if (response.statusText === 'OK') {
+    res.statusCode = 302;
+    res.setHeader('Location', '/');
+    res.end();
+  }
+
+  return {
+    props: {},
+  };
 };
 
 export default LoginPage;

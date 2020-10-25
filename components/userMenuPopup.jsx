@@ -50,6 +50,7 @@ const UserMenuPopup = ({ user }) => {
 
   const handleSignOut = () => {
     dispatch(signOut());
+    Router.push('/');
   };
 
   return (

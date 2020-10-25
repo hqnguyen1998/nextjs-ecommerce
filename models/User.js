@@ -28,6 +28,19 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
+  summary: {
+    type: String,
+  },
+  location: {
+    type: String,
+  },
+  showEmail: {
+    type: Boolean,
+    default: false,
+  },
+  website: {
+    type: String,
+  },
   posts: [
     {
       type: Schema.Types.ObjectId,

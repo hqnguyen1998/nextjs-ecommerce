@@ -6,64 +6,85 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core';
+import { useSelector, useDispatch } from 'react-redux';
 import React from 'react';
+import axios from 'axios';
+import { updateUserProfile } from '../redux/actions/userActions';
 
-const UserProfileContainer = ({ user }) => {
-  const [email, setEmail] = React.useState(user.email);
-  const [file, setFile] = React.useState('');
+const UserProfileContainer = ({ profile, setProfile }) => {
+  const dispatch = useDispatch();
+  const inputRef = React.useRef(null);
+  const isLoading = useSelector((state) => state.user.isLoading);
+  const userProfile = useSelector((state) => state.user.loggedUser);
 
   const handleFile = (e) => {
-    setFile(e.target.files[0]);
-  };
+    axios({
+      url: 'https://api.imgur.com/3/image',
+      method: 'POST',
+      headers: {
+        Authorization: 'Client-ID 8a81ffd406a6030',
+      },
+      data: e.target.files[0],
+    }).then((data) => {
+      const avatarUrl = data.data.data.link;
 
-  const handleChangeProfile = () => {
-    console.log(file);
+      dispatch(updateUserProfile(userProfile._id, { avatar: avatarUrl }));
+
+      inputRef.current.value = '';
+    });
   };
 
   return (
-    <Paper>
-      <Box p={2} component='form'>
-        <Typography variant='h4'>User</Typography>
-        <TextField
-          type='email'
-          label='Email'
-          margin='dense'
-          placeholder='Email Address'
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          variant='outlined'
-          fullWidth
-        />
-        <div
-          style={{
-            padding: '10px',
-            display: 'flex',
-            justifyContent: 'space-evenly',
-            width: '350px',
-          }}
-        >
-          <Avatar
-            src={user.avatar}
-            alt={user.email}
-            style={{ marginTop: 5, width: 40, height: 40 }}
-          />
+    userProfile && (
+      <Paper>
+        <Box p={2}>
+          <Typography variant='h4'>User</Typography>
           <TextField
-            type='file'
-            variant='outlined'
+            name='email'
+            type='email'
+            label='Email'
             margin='dense'
-            onChange={handleFile}
+            placeholder='Email Address'
+            value={profile.email || ''}
+            onChange={(e) =>
+              setProfile((prevState) => ({
+                ...prevState,
+                email: e.target.value,
+              }))
+            }
+            variant='outlined'
+            required
+            fullWidth
           />
-        </div>
-        <Button
-          onClick={handleChangeProfile}
-          variant='contained'
-          color='primary'
-          fullWidth
-        >
-          Save Profile Information
-        </Button>
-      </Box>
-    </Paper>
+          <div
+            style={{
+              padding: '10px',
+              display: 'flex',
+              justifyContent: 'space-evenly',
+              width: '100%',
+            }}
+          >
+            <Avatar
+              src={userProfile.avatar}
+              alt={userProfile.email}
+              style={{ marginTop: 5, marginRight: 5, width: 40, height: 40 }}
+            />
+            <TextField
+              type='file'
+              inputRef={inputRef}
+              variant='outlined'
+              margin='dense'
+              inputProps={{
+                accept: 'image/*',
+              }}
+              disabled={isLoading && true}
+              onChange={handleFile}
+              fullWidth
+            />
+          </div>
+        </Box>
+      </Paper>
+    )
   );
 };
 

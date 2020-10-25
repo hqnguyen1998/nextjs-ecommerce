@@ -7,9 +7,44 @@ import gravatar from 'gravatar';
 dbConnect();
 
 export default async (req, res) => {
-  const { method, body, query } = req;
+  const { method, headers, body, query } = req;
 
   switch (method) {
+    case 'PUT':
+      try {
+        console.log(body);
+        const { id } = query;
+        const { authorization } = headers;
+
+        const checkValidToken = authorization.split(' ');
+
+        if (checkValidToken[0] !== 'Bearer') {
+          return res.status(400).json({
+            success: false,
+            msg: 'Invalid Token',
+          });
+        }
+
+        jwt.verify(checkValidToken[1], process.env.JWT_SECRET);
+
+        const updateUser = await User.findByIdAndUpdate(
+          id,
+          { ...body },
+          {
+            new: true,
+          }
+        );
+
+        res.status(200).json({
+          success: true,
+          data: updateUser,
+        });
+      } catch (error) {
+        res.status(400).json({
+          success: false,
+        });
+      }
+      break;
     case 'GET':
       try {
         const user = await User.findById(query.id).select('-password');

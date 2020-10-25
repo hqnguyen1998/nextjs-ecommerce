@@ -49,6 +49,11 @@ const reducer = (state = initialState, action) => {
         loggedUser: {},
         error: {},
       };
+    case t.UPDATE_USER_SUCCESS:
+      return {
+        ...state,
+        loggedUser: payload,
+      };
     case t.REMOVE_ALERT:
       return {
         ...state,
