@@ -53,6 +53,7 @@ const UserProfileContainer = ({ profile, setProfile }) => {
               }))
             }
             variant='outlined'
+            disabled
             required
             fullWidth
           />
