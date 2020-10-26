@@ -8,6 +8,8 @@ const MainLayout = ({
   children,
   LeftSideNav,
   RightSideNav,
+  maxWidth = 'md',
+  component,
 }) => {
   return (
     <div>
@@ -24,7 +26,7 @@ const MainLayout = ({
       </Head>
       <Navbar navbarTitle={navbarTitle} />
       <br />
-      <Container maxWidth='md'>
+      <Container component={component} maxWidth={maxWidth}>
         <Grid container spacing={2}>
           <Grid item md={2}>
             {LeftSideNav}

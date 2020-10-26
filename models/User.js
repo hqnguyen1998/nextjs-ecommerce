@@ -13,12 +13,14 @@ const UserSchema = new Schema({
     type: String,
     trim: true,
     lowercase: true,
+    uppercase: true,
     minlength: 1,
   },
   last_name: {
     type: String,
     trim: true,
     lowercase: true,
+    uppercase: true,
     minlength: 1,
   },
   avatar: {

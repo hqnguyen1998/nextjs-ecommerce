@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import fetch from 'isomorphic-unfetch';
 import Router from 'next/router';
 import Link from 'next/link';
+import { handleAuth } from '../utils/utils';
 import { useSelector } from 'react-redux';
 import LoginForm from '../components/loginForm';
 import MainLayout from '../layouts/mainLayout';
@@ -32,27 +33,8 @@ const LoginPage = () => {
   );
 };
 
-export const getServerSideProps = async ({ req, res }) => {
-  const token = req.cookies.token;
-
-  if (!token) {
-    return {
-      props: {},
-    };
-  }
-
-  const response = await fetch(`${process.env.API_URL}/api/auth`, {
-    method: 'GET',
-    headers: {
-      authorization: token,
-    },
-  });
-
-  if (response.statusText === 'OK') {
-    res.statusCode = 302;
-    res.setHeader('Location', '/');
-    res.end();
-  }
+export const getServerSideProps = async (ctx) => {
+  handleAuth(ctx);
 
   return {
     props: {},

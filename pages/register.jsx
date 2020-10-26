@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import Router from 'next/router';
+import { handleAuth } from '../utils/utils';
 import { useSelector } from 'react-redux';
 import MainLayout from '../layouts/mainLayout';
 import RegisterForm from '../components/registerForm';
@@ -19,6 +20,14 @@ const Register = () => {
       <RegisterForm />
     </MainLayout>
   );
+};
+
+export const getServerSideProps = (ctx) => {
+  handleAuth(ctx);
+
+  return {
+    props: {},
+  };
 };
 
 export default Register;

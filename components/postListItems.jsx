@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
     fontSize: 15,
     marginLeft: theme.spacing(1),
+    color: theme.palette.primary.main,
   },
   link: {
     textDecoration: 'none',
@@ -50,14 +51,7 @@ const useStyles = makeStyles((theme) => ({
 
 const PostListItems = ({ post }) => {
   const classes = useStyles();
-  const {
-    _id,
-    title,
-    image,
-    author: { avatar, first_name, last_name },
-    slug,
-    created_date,
-  } = post;
+  const { _id, title, image, author, slug, created_date } = post;
 
   return (
     <Card className={classes.card}>
@@ -66,17 +60,17 @@ const PostListItems = ({ post }) => {
           <CardMedia image={image} title={title} className={classes.media} />
           <div className={classes.userInfoWrapper}>
             <Avatar
-              src={avatar}
-              alt={`${first_name} ${last_name}`}
+              src={author.avatar}
+              alt='user avatar'
               className={classes.avatar}
             />
             <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <Typography
-                variant='body1'
-                color='textPrimary'
-                className={classes.userNameText}
-              >
-                {first_name} {last_name}
+              <Typography variant='body1' color='textPrimary'>
+                <Link href={`/user/${author._id}`}>
+                  <a className={classes.userNameText}>
+                    {author.first_name} {author.last_name}
+                  </a>
+                </Link>
               </Typography>
               <Typography
                 variant='subtitle1'
