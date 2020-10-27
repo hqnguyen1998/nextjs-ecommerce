@@ -43,6 +43,40 @@ const UserSchema = new Schema({
   website: {
     type: String,
   },
+  links: {
+    facebook: {
+      type: String,
+      default: '',
+    },
+    instagram: {
+      type: String,
+      default: '',
+    },
+    linkedIn: {
+      type: String,
+      default: '',
+    },
+    youtube: {
+      type: String,
+      default: '',
+    },
+    stackOverFlow: {
+      type: String,
+      default: '',
+    },
+    medium: {
+      type: String,
+      default: '',
+    },
+    github: {
+      type: String,
+      default: '',
+    },
+    twitch: {
+      type: String,
+      default: '',
+    },
+  },
   posts: [
     {
       type: Schema.Types.ObjectId,

@@ -6,6 +6,7 @@ import fetch from 'isomorphic-unfetch';
 import { useDispatch } from 'react-redux';
 import React from 'react';
 import { updateUserProfile } from '../redux/actions/userActions';
+import UserLinks from '../components/userLinks';
 
 const Settings = ({ user }) => {
   const dispatch = useDispatch();
@@ -20,10 +21,33 @@ const Settings = ({ user }) => {
     website: user.website,
   });
 
+  const [links, setLinks] = React.useState({
+    facebook: user.links.facebook,
+    instagram: user.links.instagram,
+    linkedIn: user.links.linkedIn,
+    youtube: user.links.youtube,
+    stackOverFlow: user.links.stackOverFlow,
+    medium: user.links.medium,
+    github: user.links.github,
+    twitch: user.links.twitch,
+  });
+
   const handleSaveProfile = (e) => {
     e.preventDefault();
 
-    dispatch(updateUserProfile(user._id, profile));
+    const saveProfile = {
+      links: links,
+      ...profile,
+    };
+
+    dispatch(updateUserProfile(user._id, saveProfile));
+  };
+
+  const handleChangeLinks = (e) => {
+    setLinks((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   return (
@@ -32,6 +56,8 @@ const Settings = ({ user }) => {
         <UserProfileContainer profile={profile} setProfile={setProfile} />
         <br />
         <BasicUserProfile profile={profile} setProfile={setProfile} />
+        <br />
+        <UserLinks links={links} onChange={handleChangeLinks} />
         <br />
         <Button
           onClick={handleSaveProfile}

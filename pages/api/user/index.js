@@ -12,7 +12,6 @@ export default async (req, res) => {
   switch (method) {
     case 'PUT':
       try {
-        console.log(body);
         const { id } = query;
         const { authorization } = headers;
 
@@ -27,13 +26,9 @@ export default async (req, res) => {
 
         jwt.verify(checkValidToken[1], process.env.JWT_SECRET);
 
-        const updateUser = await User.findByIdAndUpdate(
-          id,
-          { ...body },
-          {
-            new: true,
-          }
-        );
+        const updateUser = await User.findByIdAndUpdate(id, body, {
+          new: true,
+        });
 
         res.status(200).json({
           success: true,

@@ -1,5 +1,13 @@
 import React from 'react';
-import { Paper, Box, Typography, Avatar, makeStyles } from '@material-ui/core';
+import {
+  Paper,
+  Box,
+  Typography,
+  Avatar,
+  makeStyles,
+  IconButton,
+} from '@material-ui/core';
+import { Favorite, FavoriteBorder } from '@material-ui/icons';
 import Moment from 'react-moment';
 import ReactMarkDown from 'react-markdown';
 import gfm from 'remark-gfm';
@@ -43,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 const PostContent = ({ post }) => {
   const classes = useStyles();
 
-  const { email, avatar, first_name, last_name } = post.author;
+  const { email, avatar, first_name, last_name, links } = post.author;
 
   return (
     <React.Fragment>
@@ -86,6 +94,12 @@ const PostContent = ({ post }) => {
           >
             <ReactMarkDown plugins={[gfm]} children={post.body} />
           </Typography>
+
+          <div style={{ display: 'flex', flexDirection: 'row-reverse' }}>
+            <IconButton color='inherit'>
+              <FavoriteBorder />
+            </IconButton>
+          </div>
         </Box>
       </Paper>
     </React.Fragment>
