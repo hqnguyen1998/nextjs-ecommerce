@@ -41,7 +41,15 @@ const useStyles = makeStyles((theme) => ({
 const UserSideAbout = ({ avatar, first_name, last_name, summary }) => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <img src={avatar} style={{ width: '131px', marginBottom: 20 }} />
+      <img
+        src={avatar}
+        style={{
+          width: '100%',
+          height: '200px',
+          objectFit: 'cover',
+          marginBottom: 20,
+        }}
+      />
 
       <Typography variant='caption' color='textSecondary'>
         ABOUT
@@ -80,7 +88,7 @@ const UserProfilePage = ({
     <>
       <MainLayout
         title={`${first_name} ${last_name} - DEV Community`}
-        maxWidth='lg'
+        maxWidth='md'
         LeftSideNav={
           <UserSideAbout
             avatar={avatar}

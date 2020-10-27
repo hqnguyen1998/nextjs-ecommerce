@@ -32,13 +32,8 @@ const useStyles = makeStyles((theme) => ({
   },
   link: {
     textDecoration: 'none',
-  },
-  linkText: {
     fontWeight: 'bold',
-    color: '#08090A',
-    marginTop: theme.spacing(2),
-    marginLeft: theme.spacing(3),
-    textAlign: 'justify',
+    color: theme.palette.text.primary,
     '&:hover': {
       color: '#3b49df',
     },
@@ -85,13 +80,7 @@ const PostListItems = ({ post }) => {
 
           <Link href='/post/[slug]/[pid]' as={`/post/${slug}/${_id}`}>
             <a className={classes.link}>
-              <Typography
-                variant='h4'
-                color='textPrimary'
-                className={classes.linkText}
-              >
-                {title}
-              </Typography>
+              <Typography variant='h4'>{title}</Typography>
             </a>
           </Link>
           {post.tags.map((tag, i) => (
